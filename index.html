@@ -243,7 +243,7 @@
             </div>
 
             <!-- Card 2: AI 스토리와 영상 -->
-            <div class="glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group card-item" data-category="ethics" onclick="openModal(2)">
+            <div class="glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group card-item" data-category="ethics" onclick="window.location.href='./storybook/index.html'">
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <span class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
@@ -630,13 +630,56 @@
                             </p>
                         </div>
                         
-                        <!-- Embedded Video Preview Mock -->
-                        <div class="relative rounded-xl overflow-hidden bg-slate-900 dark:bg-slate-950 border border-slate-800 aspect-video flex flex-col items-center justify-center text-center p-6 group">
-                            <div class="w-16 h-16 rounded-full bg-purple-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-purple-500/50 cursor-pointer group-hover:scale-110 transition">
-                                <i class="fa-solid fa-play ml-1"></i>
+                        <!-- Interactive Animated AI Video Player -->
+                        <div class="relative rounded-2xl overflow-hidden bg-slate-950 border border-purple-900/40 aspect-video shadow-2xl flex flex-col justify-between p-4 group select-none" id="video-player-box">
+                            <!-- Canvas Background for Animation -->
+                            <canvas id="aiVideoCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60 pointer-events-none"></div>
+
+                            <!-- Top Watermark / Status Bar -->
+                            <div class="relative z-10 flex justify-between items-center text-[11px] text-purple-300 font-medium">
+                                <span class="bg-purple-900/60 px-2.5 py-1 rounded-md border border-purple-500/30 backdrop-blur-sm flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500" id="video-status-dot"></span>
+                                    <span id="video-status-text">재생 준비 완료</span>
+                                </span>
+                                <span class="text-purple-200 font-mono text-[10px] bg-slate-900/80 px-2 py-0.5 rounded border border-purple-800/50" id="video-scene-indicator">1장 / 3장</span>
                             </div>
-                            <p class="text-xs text-purple-300 mt-4 font-medium">AI 생성 스토리 영상 프리뷰 (1분 30초)</p>
-                            <span class="text-[10px] text-slate-400">Runway Gen-2 & ElevenLabs 음성합성 적용</span>
+
+                            <!-- Start Overlay / Play Center Button -->
+                            <div class="relative z-10 my-auto flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300" id="video-play-overlay" onclick="togglePlayAiVideo()">
+                                <div class="w-16 h-16 rounded-full bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center text-2xl shadow-xl shadow-purple-500/40 transform hover:scale-110 transition-all duration-300" id="main-play-btn">
+                                    <i class="fa-solid fa-play ml-1" id="main-play-icon"></i>
+                                </div>
+                                <p class="text-xs text-purple-200 font-bold mt-3 shadow-sm" id="main-play-text">AI 스토리 영상 재생하기</p>
+                                <span class="text-[10px] text-slate-400 mt-0.5">클릭 시 AI 애니메이션 및 음성 내레이션(TTS)이 연동됩니다</span>
+                            </div>
+
+                            <!-- Subtitle Overlay -->
+                            <div class="relative z-10 bg-slate-900/85 backdrop-blur-md p-2.5 rounded-xl border border-purple-500/30 text-center my-1 transition-all" id="subtitle-box">
+                                <p class="text-xs font-semibold text-purple-100 leading-snug" id="subtitle-text">
+                                    "2050년, 오염된 바다를 청소하기 위해 지능형 AI 로봇 '오션가디언'이 개발되었습니다."
+                                </p>
+                            </div>
+
+                            <!-- Video Bottom Controls -->
+                            <div class="relative z-10 flex items-center gap-3 bg-slate-900/90 p-2 rounded-xl border border-slate-800 text-xs">
+                                <button onclick="togglePlayAiVideo()" class="w-8 h-8 rounded-lg bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center transition flex-shrink-0">
+                                    <i class="fa-solid fa-play text-xs" id="ctrl-play-icon"></i>
+                                </button>
+                                
+                                <!-- Progress Bar -->
+                                <div class="flex-grow flex items-center gap-2">
+                                    <input type="range" id="video-seek-bar" min="0" max="30" value="0" class="w-full accent-purple-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer" oninput="seekAiVideo(this.value)">
+                                    <span class="text-[10px] font-mono text-purple-300 w-12 text-right flex-shrink-0" id="video-timer">00:00</span>
+                                </div>
+
+                                <!-- Scene Jump Buttons -->
+                                <div class="flex gap-1 flex-shrink-0">
+                                    <button onclick="jumpToScene(1)" class="px-2 py-1 rounded bg-purple-900/60 hover:bg-purple-800 text-[10px] text-purple-200 border border-purple-700/50">1장</button>
+                                    <button onclick="jumpToScene(2)" class="px-2 py-1 rounded bg-purple-900/60 hover:bg-purple-800 text-[10px] text-purple-200 border border-purple-700/50">2장</button>
+                                    <button onclick="jumpToScene(3)" class="px-2 py-1 rounded bg-purple-900/60 hover:bg-purple-800 text-[10px] text-purple-200 border border-purple-700/50">3장</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="text-xs text-slate-500 dark:text-slate-400 space-y-1">
@@ -646,65 +689,9 @@
                             </div>
                         </div>
                     </div>
-                `
-            },
-            3: {
-                tag: "주제 03 • 데이터 시각화",
-                title: "진로 데이터 분석: AI 분야 직무 변화 트렌드",
-                icon: '<i class="fa-solid fa-chart-line"></i>',
-                color: 'emerald',
-                content: `
-                    <div class="space-y-4">
-                        <p class="text-sm text-slate-600 dark:text-slate-300">
-                            워크넷 및 산업통계 공공데이터를 기반으로 최근 5년간 인공지능 관련 직무 채용 공고 수의 증가세를 분석했습니다.
-                        </p>
-                        <div class="p-4 bg-slate-100 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
-                            <canvas id="careerChart" class="max-h-60"></canvas>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3 text-xs">
-                            <div class="p-3 bg-slate-100 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                                <span class="text-emerald-600 dark:text-emerald-400 font-bold block">가장 급성장한 직무</span>
-                                <span class="text-slate-700 dark:text-slate-300">AI 엔지니어 및 프롬프트 기획자 (+185%)</span>
-                            </div>
-                            <div class="p-3 bg-slate-100 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                                <span class="text-emerald-600 dark:text-emerald-400 font-bold block">요구 핵심 기술</span>
-                                <span class="text-slate-700 dark:text-slate-300">Python, PyTorch, 데이터 정제, 윤리 리터러시</span>
-                            </div>
-                        </div>
-                    </div>
                 `,
                 onRender: () => {
-                    destroyActiveChart();
-                    const canvas = document.getElementById('careerChart');
-                    if (!canvas || typeof Chart === 'undefined') return;
-
-                    const isDark = document.documentElement.classList.contains('dark');
-                    const textColor = isDark ? '#cbd5e1' : '#475569';
-                    const gridColor = isDark ? '#334155' : '#e2e8f0';
-
-                    const ctx = canvas.getContext('2d');
-                    activeChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: ['2022', '2023', '2024', '2025', '2026(예상)'],
-                            datasets: [{
-                                label: 'AI 관련 채용 공고 수 (천 건)',
-                                data: [12, 19, 35, 62, 98],
-                                borderColor: '#10b981',
-                                backgroundColor: 'rgba(16, 185, 129, 0.15)',
-                                fill: true,
-                                tension: 0.4
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: { legend: { labels: { color: textColor } } },
-                            scales: {
-                                x: { ticks: { color: textColor }, grid: { color: gridColor } },
-                                y: { ticks: { color: textColor }, grid: { color: gridColor } }
-                            }
-                        }
-                    });
+                    initAiVideoPlayer();
                 }
             },
             4: {
@@ -1032,10 +1019,236 @@
         function closeModal() {
             const modal = document.getElementById('modal');
             modal.classList.add('opacity-0');
+            stopTts();
+            if (videoAnimId) {
+                cancelAnimationFrame(videoAnimId);
+                videoAnimId = null;
+            }
+            videoPlaying = false;
             setTimeout(() => {
                 modal.classList.add('hidden');
                 destroyActiveChart();
             }, 200);
+        }
+
+        // AI Video Player Logic
+        let videoPlaying = false;
+        let videoTime = 0;
+        const videoDuration = 30;
+        let videoAnimId = null;
+        let currentSceneIndex = 0;
+
+        const videoScenes = [
+            { start: 0, end: 10, title: "1장 • 해양 청소 AI 로봇 탄생", text: "2050년, 오염된 바다를 청소하기 위해 지능형 AI 로봇 '오션가디언'이 개발되었습니다." },
+            { start: 10, end: 20, title: "2장 • 소년 정연우와의 만남", text: "해변에서 홀로 쓸쓸히 지내던 소년 정연우는 부상당한 AI 로봇을 발견하고 마음을 열기 시작합니다." },
+            { start: 20, end: 30, title: "3장 • 푸른 바다의 희망", text: "인간과 인공지능이 깊은 우정을 쌓으며 마침내 푸른 바다의 깨끗한 미래를 함께 만들어 나갑니다." }
+        ];
+
+        function initAiVideoPlayer() {
+            videoPlaying = false;
+            videoTime = 0;
+            currentSceneIndex = 0;
+            stopTts();
+            updateVideoUI();
+            drawVideoCanvasFrame();
+        }
+
+        function togglePlayAiVideo() {
+            videoPlaying = !videoPlaying;
+            
+            const mainPlayIcon = document.getElementById('main-play-icon');
+            const ctrlPlayIcon = document.getElementById('ctrl-play-icon');
+            const overlay = document.getElementById('video-play-overlay');
+            const statusDot = document.getElementById('video-status-dot');
+            const statusText = document.getElementById('video-status-text');
+
+            if (videoPlaying) {
+                if (videoTime >= videoDuration) videoTime = 0;
+                if (mainPlayIcon) mainPlayIcon.className = "fa-solid fa-pause ml-0";
+                if (ctrlPlayIcon) ctrlPlayIcon.className = "fa-solid fa-pause";
+                if (overlay) overlay.classList.add('opacity-20', 'hover:opacity-100');
+                if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-rose-500 animate-pulse";
+                if (statusText) statusText.innerText = "영상 재생 중 (Live)";
+                
+                speakCurrentScene();
+                runVideoLoop();
+            } else {
+                if (mainPlayIcon) mainPlayIcon.className = "fa-solid fa-play ml-1";
+                if (ctrlPlayIcon) ctrlPlayIcon.className = "fa-solid fa-play";
+                if (overlay) overlay.classList.remove('opacity-20');
+                if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-amber-500";
+                if (statusText) statusText.innerText = "일시 정지됨";
+                
+                stopTts();
+                if (videoAnimId) {
+                    cancelAnimationFrame(videoAnimId);
+                    videoAnimId = null;
+                }
+            }
+        }
+
+        function runVideoLoop() {
+            if (!videoPlaying) return;
+
+            videoTime += 0.05;
+            if (videoTime >= videoDuration) {
+                videoTime = videoDuration;
+                videoPlaying = false;
+                togglePlayAiVideo();
+                return;
+            }
+
+            updateVideoUI();
+            drawVideoCanvasFrame();
+            videoAnimId = requestAnimationFrame(runVideoLoop);
+        }
+
+        function updateVideoUI() {
+            const seekBar = document.getElementById('video-seek-bar');
+            const timer = document.getElementById('video-timer');
+            const subtitle = document.getElementById('subtitle-text');
+            const sceneIndicator = document.getElementById('video-scene-indicator');
+
+            if (seekBar) seekBar.value = Math.floor(videoTime);
+            
+            const mins = Math.floor(videoTime / 60).toString().padStart(2, '0');
+            const secs = Math.floor(videoTime % 60).toString().padStart(2, '0');
+            if (timer) timer.innerText = `${mins}:${secs}`;
+
+            // Check scene change
+            let newSceneIndex = 0;
+            if (videoTime >= 20) newSceneIndex = 2;
+            else if (videoTime >= 10) newSceneIndex = 1;
+
+            if (newSceneIndex !== currentSceneIndex) {
+                currentSceneIndex = newSceneIndex;
+                if (videoPlaying) speakCurrentScene();
+            }
+
+            const currentScene = videoScenes[currentSceneIndex];
+            if (subtitle) subtitle.innerText = `"${currentScene.text}"`;
+            if (sceneIndicator) sceneIndicator.innerText = `${currentScene.title}`;
+        }
+
+        function seekAiVideo(val) {
+            videoTime = parseFloat(val);
+            updateVideoUI();
+            drawVideoCanvasFrame();
+            if (videoPlaying) speakCurrentScene();
+        }
+
+        function jumpToScene(sceneNum) {
+            if (sceneNum === 1) videoTime = 0;
+            else if (sceneNum === 2) videoTime = 10;
+            else if (sceneNum === 3) videoTime = 20;
+
+            if (!videoPlaying) {
+                togglePlayAiVideo();
+            } else {
+                updateVideoUI();
+                drawVideoCanvasFrame();
+                speakCurrentScene();
+            }
+        }
+
+        function speakCurrentScene() {
+            stopTts();
+            if ('speechSynthesis' in window) {
+                const text = videoScenes[currentSceneIndex].text;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ko-KR';
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function stopTts() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function drawVideoCanvasFrame() {
+            const canvas = document.getElementById('aiVideoCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            const parent = canvas.parentElement;
+            if (parent) {
+                canvas.width = parent.clientWidth || 600;
+                canvas.height = parent.clientHeight || 340;
+            }
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Background Gradient per scene
+            const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+            if (currentSceneIndex === 0) {
+                bgGrad.addColorStop(0, '#0f172a');
+                bgGrad.addColorStop(1, '#3b0764');
+            } else if (currentSceneIndex === 1) {
+                bgGrad.addColorStop(0, '#0284c7');
+                bgGrad.addColorStop(1, '#0f172a');
+            } else {
+                bgGrad.addColorStop(0, '#059669');
+                bgGrad.addColorStop(1, '#1e1b4b');
+            }
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Sine Wave Ocean Effect
+            const t = Date.now() * 0.002;
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(168, 85, 247, 0.4)';
+            ctx.lineWidth = 3;
+            for (let x = 0; x <= w; x += 10) {
+                const y = h * 0.65 + Math.sin(x * 0.015 + t) * 18 + Math.cos(x * 0.025 + t * 0.6) * 8;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Floating Energy Particles
+            ctx.fillStyle = 'rgba(236, 72, 153, 0.5)';
+            for (let i = 0; i < 18; i++) {
+                const px = (Math.sin(i * 77 + t * 0.4) * 0.5 + 0.5) * w;
+                const py = (Math.cos(i * 33 + t * 0.3) * 0.5 + 0.5) * h;
+                const pr = (Math.sin(i + t) * 2 + 3);
+                ctx.beginPath();
+                ctx.arc(px, py, pr, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Central Animated AI Hologram / Robot Graphic
+            ctx.save();
+            ctx.translate(w / 2, h / 2 - 12);
+            const pulse = Math.sin(t * 3) * 6;
+
+            // Halo Rings
+            ctx.beginPath();
+            ctx.arc(0, 0, 48 + pulse, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(147, 51, 234, 0.25)';
+            ctx.fill();
+            ctx.strokeStyle = '#c084fc';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // AI Robot Face
+            ctx.fillStyle = '#c084fc';
+            ctx.beginPath();
+            ctx.arc(-16, -8, 6, 0, Math.PI * 2);
+            ctx.arc(16, -8, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Smile
+            ctx.beginPath();
+            ctx.arc(0, 8, 16, 0.15 * Math.PI, 0.85 * Math.PI);
+            ctx.strokeStyle = '#f3e8ff';
+            ctx.lineWidth = 3.5;
+            ctx.stroke();
+
+            ctx.restore();
         }
 
         // Interactive School Meal Simulator Handler
