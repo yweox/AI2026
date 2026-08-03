@@ -265,7 +265,7 @@
             </div>
 
             <!-- Card 3: 진로 데이터 분석 -->
-            <div class="glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group card-item" data-category="career" onclick="openModal(3)">
+            <div class="glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group card-item" data-category="career" onclick="location.href='./data2/index.html'">
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <span class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
@@ -626,61 +626,6 @@
                 `,
                 onRender: () => {
                     initAiVideoPlayer();
-                }
-            },
-            3: {
-                tag: "주제 03 • 데이터 분석",
-                title: "신산업 IT 및 AI 직무 수요 트렌드 분석",
-                icon: '<i class="fa-solid fa-chart-line"></i>',
-                color: 'emerald',
-                content: `
-                    <div class="space-y-4">
-                        <p class="text-sm text-slate-600 dark:text-slate-300">
-                            공공데이터 포털과 한국고용정보원 데이터를 바탕으로 AI 및 빅데이터 분야의 5년간 채용 수요 및 직무 역량 변화를 분석했습니다.
-                        </p>
-                        <div class="p-4 bg-slate-100 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
-                            <canvas id="careerDataChart" class="max-h-60"></canvas>
-                        </div>
-                        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 rounded-xl text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
-                            <span class="font-bold block text-emerald-900 dark:text-emerald-200"><i class="fa-solid fa-chart-pie"></i> 시각화 인사이트</span>
-                            <p>AI 도입 심화에 따라 단순 프로그래밍 직무 대비 AI 인프라 구축 및 프롬프트 엔지니어링 융합 직무 수요가 연평균 34% 증가하고 있음을 확인했습니다.</p>
-                        </div>
-                    </div>
-                `,
-                onRender: () => {
-                    destroyActiveChart();
-                    const canvas = document.getElementById('careerDataChart');
-                    if (!canvas || typeof Chart === 'undefined') return;
-
-                    const isDark = document.documentElement.classList.contains('dark');
-                    const textColor = isDark ? '#cbd5e1' : '#475569';
-                    const gridColor = isDark ? '#334155' : '#e2e8f0';
-
-                    const ctx = canvas.getContext('2d');
-                    activeChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: ['2022년', '2023년', '2024년', '2025년', '2026년(예측)'],
-                            datasets: [
-                                {
-                                    label: 'AI / 데이터 엔지니어링 수요 지수',
-                                    data: [100, 135, 180, 245, 310],
-                                    borderColor: '#10b981',
-                                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
-                                    fill: true,
-                                    tension: 0.3
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: { legend: { labels: { color: textColor } } },
-                            scales: {
-                                x: { ticks: { color: textColor }, grid: { color: gridColor } },
-                                y: { ticks: { color: textColor }, grid: { color: gridColor } }
-                            }
-                        }
-                    });
                 }
             },
             4: {
