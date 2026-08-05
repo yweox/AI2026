@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 축제 가이드 - 서비스 안내 및 기능 소개</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Noto Sans KR Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    },
+                    colors: {
+                        busan: {
+                            blue: '#1E40AF',
+                            light: '#3B82F6',
+                            accent: '#2563EB',
+                            bg: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white transition-colors duration-300">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-slate-900/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Home Button -->
+                <a href="../index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold border border-slate-700 transition-all shadow-sm">
+                    <i class="fa-solid fa-house text-blue-400"></i>
+                    <span>홈</span>
+                </a>
+                <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-blue-200 bg-clip-text text-transparent">부산 축제 가이드</span>
+                    <span class="text-xs text-blue-400 font-medium ml-2 px-2 py-0.5 rounded-full bg-blue-950 border border-blue-800 hidden sm:inline-block">Platform Overview</span>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+                <a href="#overview" class="hover:text-blue-400 transition-colors">서비스 개요</a>
+                <a href="#features" class="hover:text-blue-400 transition-colors">핵심 기능</a>
+                <a href="#ui-breakdown" class="hover:text-blue-400 transition-colors">UI 화면 구조</a>
+                <a href="#tech" class="hover:text-blue-400 transition-colors">공공데이터 연동</a>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <!-- Dark / Light Mode Toggle Button -->
+                <button id="themeToggleBtn" onclick="toggleDarkMode()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all" title="테마 변경">
+                    <i id="themeIcon" class="fa-solid fa-moon text-slate-300"></i>
+                    <span id="themeText" class="hidden sm:inline">다크 모드</span>
+                </button>
+
+                <a href="#ui-breakdown" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md shadow-blue-600/30">
+                    화면 구조 분석보기
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="overview" class="relative overflow-hidden bg-slate-900 text-white py-20 lg:py-28">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-900 to-slate-950 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        부산광역시 16개 구·군 실시간 축제 정보 통합 서비스
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+                        부산의 모든 축제와 일정을<br>
+                        <span class="bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent">한눈에 탐색하고 검색하세요</span>
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        공공데이터 포털 공식 API 연동을 통해 부산광역시 전역의 16개 구·군별 축제 정보를 실시간으로 수집 및 가공하여, 날짜·지역·상태별 맞춤형 검색과 카드/목록/달력/지도 형태의 다각도 뷰를 제공합니다.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800">
+                        <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <div class="text-2xl font-bold text-blue-400">16개</div>
+                            <div class="text-xs text-slate-400 mt-1">구·군별 통합 데이터</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <div class="text-2xl font-bold text-cyan-400">4가지</div>
+                            <div class="text-xs text-slate-400 mt-1">맞춤 보기 모드</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                            <div class="text-2xl font-bold text-emerald-400">100%</div>
+                            <div class="text-xs text-slate-400 mt-1">공공 API 자동 연동</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mockup Preview Banner -->
+                <div class="lg:col-span-5">
+                    <div class="relative rounded-2xl p-1 bg-gradient-to-b from-slate-700 to-slate-800 shadow-2xl shadow-blue-900/20">
+                        <div class="bg-slate-900 rounded-xl overflow-hidden border border-slate-700/50 p-4">
+                            <!-- Mini UI Preview Card -->
+                            <div class="bg-slate-800/90 rounded-lg p-3 mb-3 border border-slate-700 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                    <span class="text-xs text-slate-400 font-mono ml-2">busan-festival-guide.kr</span>
+                                </div>
+                                <span class="text-xs px-2 py-0.5 rounded bg-blue-600/30 text-blue-300 font-semibold">공공데이터 포털 연동</span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <div class="p-3 bg-blue-600 rounded-lg text-white font-bold text-sm flex justify-between items-center">
+                                    <span>부산 전체 축제</span>
+                                    <span class="bg-white/20 text-xs px-2 py-0.5 rounded-full">40건</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="p-2 bg-slate-800 rounded border border-slate-700 flex justify-between">
+                                        <span class="text-slate-300">해운대구</span>
+                                        <span class="text-blue-400 font-bold">11건</span>
+                                    </div>
+                                    <div class="p-2 bg-slate-800 rounded border border-slate-700 flex justify-between">
+                                        <span class="text-slate-300">중구</span>
+                                        <span class="text-blue-400 font-bold">5건</span>
+                                    </div>
+                                    <div class="p-2 bg-slate-800 rounded border border-slate-700 flex justify-between">
+                                        <span class="text-slate-300">부산진구</span>
+                                        <span class="text-blue-400 font-bold">4건</span>
+                                    </div>
+                                    <div class="p-2 bg-slate-800 rounded border border-slate-700 flex justify-between">
+                                        <span class="text-slate-300">수영구</span>
+                                        <span class="text-blue-400 font-bold">4건</span>
+                                    </div>
+                                </div>
+                                <div class="p-2 bg-slate-800/50 rounded border border-slate-700/50 text-[11px] text-slate-400 text-center">
+                                    💡 카드 / 목록 / 달력 / 지도 뷰 전환 지원
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Go to App CTA Banner (Before Key Features) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-10 relative z-20 mb-8 sm:mb-12">
+        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 rounded-2xl p-6 sm:p-8 shadow-2xl text-white flex flex-col sm:flex-row items-center justify-between gap-6 border border-blue-400/30">
+            <div class="space-y-1.5 text-center sm:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-xs font-semibold text-white backdrop-blur-sm mb-1">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> 부산 축제 실시간 가이드 서비스
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black tracking-tight">지금 바로 부산 축제 가이드 앱을 바로 체험해보세요!</h3>
+                <p class="text-xs sm:text-sm text-blue-100">16개 구·군별 축제 실시간 현황, 카드·목록·달력·지도 뷰 및 맞춤 검색을 바로 이용할 수 있습니다.</p>
+            </div>
+            <a href="https://festival01-eo6g.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-7 py-4 rounded-xl bg-white text-blue-700 hover:bg-blue-50 font-extrabold text-base transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 group shrink-0 border border-white/50">
+                <i class="fa-solid fa-rocket text-blue-600 group-hover:rotate-12 transition-transform text-lg"></i>
+                <span>앱으로 이동하기</span>
+                <i class="fa-solid fa-arrow-right text-xs text-blue-500 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Key Features Section -->
+    <section id="features" class="py-20 bg-white dark:bg-slate-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-600 dark:text-blue-400 font-bold text-sm uppercase tracking-wider">Key Features</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">서비스 주요 핵심 기능</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-3 text-base">
+                    원하는 축제 정보를 가장 빠르고 직관적으로 찾아볼 수 있도록 설계된 차별화된 기능들입니다.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/80 hover:border-blue-200 dark:hover:border-blue-500 transition-all hover:shadow-xl hover:shadow-blue-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">16개 구·군 현황 그리드</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        부산광역시 전체 및 16개 행정구역(해운대구, 중구, 부산진구 등)별 축제 개최 건수를 한눈에 확인하고 빠르게 필터링할 수 있습니다.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/80 hover:border-blue-200 dark:hover:border-blue-500 transition-all hover:shadow-xl hover:shadow-blue-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-900/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">다차원 상세 검색 & 필터</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        축제명, 장소, 내용 키워드 검색은 물론 특정 날짜 지정, 개최 월 선택(1월~12월), 진행 상태(예정, 진행중, 종료) 조건 검색을 지원합니다.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/80 hover:border-blue-200 dark:hover:border-blue-500 transition-all hover:shadow-xl hover:shadow-blue-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-table-cells"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">4가지 뷰 모드 전환</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        사용자 선호에 맞춰 시각적 카드 뷰, 가독성 높은 목록 뷰, 일정 파악에 유용한 달력 뷰, 위치 기반 지도 뷰 등 다양한 화면 방식을 제공합니다.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/80 hover:border-blue-200 dark:hover:border-blue-500 transition-all hover:shadow-xl hover:shadow-blue-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">공공데이터 실시간 수집</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        부산광역시 공식 공공데이터 포털 API와 직접 연동되어 지자체에서 등록한 최신 축제 일정과 정보를 가장 빠르게 업데이트합니다.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/80 hover:border-blue-200 dark:hover:border-blue-500 transition-all hover:shadow-xl hover:shadow-blue-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bookmark"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">관심 축제 즐겨찾기</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        방문하고 싶은 축제 카드의 북마크 버튼을 클릭하여 나만의 축제 보관함에 저장이 가능하며, 상단 바에서 수량을 즉시 확인할 수 있습니다.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/80 hover:border-blue-200 dark:hover:border-blue-500 transition-all hover:shadow-xl hover:shadow-blue-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl font-bold mb-5 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">축제 진행 상태 배지 분류</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        '개최 예정', '진행중', '종료' 상태 배지와 구·군 지역 태그를 직관적으로 표기하여 현재 참여 가능한 축제를 유저가 즉시 식별합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UI Component Breakdown Section (Visual Explanation) -->
+    <section id="ui-breakdown" class="py-20 bg-slate-100 dark:bg-slate-950 transition-colors duration-300 border-y border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-blue-600 dark:text-blue-400 font-bold text-sm uppercase tracking-wider">UI & UX Architecture</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">화면 구성 및 인터페이스 명세</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-3 text-base">
+                    대시보드 메인 화면의 구역별 주요 인터페이스 기능 안내입니다.
+                </p>
+            </div>
+
+            <!-- UI Interactive Map / Blueprint -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden p-6 lg:p-8 transition-colors duration-300">
+                
+                <!-- Section 1: Header Bar -->
+                <div class="relative border-2 border-dashed border-blue-400 bg-blue-50/40 rounded-xl p-4 mb-6 transition-all hover:bg-blue-50">
+                    <div class="absolute -top-3 left-4 px-2 py-0.5 bg-blue-600 text-white text-xs font-bold rounded">
+                        영역 1: 최상단 시스템 헤더
+                    </div>
+                    <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+                        <div>
+                            <h4 class="font-bold text-slate-900">부산 축제 가이드 <span class="text-xs text-slate-500 font-normal">Busan Festivals</span></h4>
+                            <p class="text-xs text-slate-500">부산광역시 구·군별 축제 & 날짜별 정보 한눈에 보기</p>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs">
+                            <span class="px-2.5 py-1 rounded-full bg-slate-800 text-emerald-400 font-semibold">● 공공데이터 포털 연동</span>
+                            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 font-medium">총 40개 축제</span>
+                            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 font-medium">즐겨찾기 (0)</span>
+                            <span class="p-1 rounded bg-slate-200 text-slate-600"><i class="fa-solid fa-rotate-right"></i></span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-blue-700 mt-3 bg-blue-100/60 p-2 rounded">
+                        🎯 <strong>기능 설명:</strong> 서비스명 및 서브 타이틀 표시, 공공데이터 포털과의 실시간 연동 상태, 전체 데이터 건수 및 스크랩된 즐겨찾기 수량을 요약 표기합니다.
+                    </p>
+                </div>
+
+                <!-- Section 2: District Filter Grid -->
+                <div class="relative border-2 border-dashed border-indigo-400 bg-indigo-50/40 rounded-xl p-4 mb-6 transition-all hover:bg-indigo-50">
+                    <div class="absolute -top-3 left-4 px-2 py-0.5 bg-indigo-600 text-white text-xs font-bold rounded">
+                        영역 2: 16개 구·군 데이터 통계 및 퀵 필터
+                    </div>
+                    <div class="pt-2">
+                        <div class="text-sm font-bold text-slate-800 mb-3"><i class="fa-regular fa-compass text-blue-600"></i> 부산 16개 구·군별 축제 살펴보기</div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2 text-xs">
+                            <div class="p-2 bg-blue-600 text-white rounded font-bold text-center">부산 전체 (40건)</div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-700">강서구 <span class="text-blue-600 font-bold">2건</span></div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-700">금정구 <span class="text-blue-600 font-bold">1건</span></div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-700">기장군 <span class="text-blue-600 font-bold">3건</span></div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-400">남구 <span class="text-slate-400">0건</span></div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-700">동구 <span class="text-blue-600 font-bold">2건</span></div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-700">해운대구 <span class="text-blue-600 font-bold">11건</span></div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-700">수영구 <span class="text-blue-600 font-bold">4건</span></div>
+                            <div class="p-2 bg-white rounded border text-center text-slate-700">중구 <span class="text-blue-600 font-bold">5건</span></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-indigo-700 mt-3 bg-indigo-100/60 p-2 rounded">
+                        🎯 <strong>기능 설명:</strong> 클릭 한 번으로 특정 자치구의 축제 정보만 필터링합니다. 데이터가 있는 구·군은 파란색 건수로 강조되며, 0건인 지역은 비활성 시각화 처리됩니다.
+                    </p>
+                </div>
+
+                <!-- Section 3: Detailed Filter Bar & View Options -->
+                <div class="relative border-2 border-dashed border-emerald-400 bg-emerald-50/40 rounded-xl p-4 mb-6 transition-all hover:bg-emerald-50">
+                    <div class="absolute -top-3 left-4 px-2 py-0.5 bg-emerald-600 text-white text-xs font-bold rounded">
+                        영역 3: 스마트 검색바 및 다중 필터 & 뷰 모드 컨트롤러
+                    </div>
+                    <div class="pt-2 space-y-3">
+                        <div class="flex flex-wrap gap-2 items-center justify-between">
+                            <div class="flex-1 min-w-[240px] bg-white border rounded px-3 py-1.5 text-xs text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass"></i> 축제 이름, 장소, 내용으로 검색...
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="px-3 py-1.5 bg-white border rounded text-xs text-slate-700">최신순 <i class="fa-solid fa-chevron-down text-[10px]"></i></span>
+                                <div class="inline-flex rounded border bg-white p-0.5 text-xs">
+                                    <span class="px-2.5 py-1 bg-blue-100 text-blue-700 font-bold rounded"><i class="fa-solid fa-grip"></i> 카드</span>
+                                    <span class="px-2.5 py-1 text-slate-600"><i class="fa-solid fa-list"></i> 목록</span>
+                                    <span class="px-2.5 py-1 text-slate-600"><i class="fa-regular fa-calendar"></i> 달력</span>
+                                    <span class="px-2.5 py-1 text-slate-600"><i class="fa-solid fa-map"></i> 지도</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 text-[11px] items-center text-slate-600">
+                            <span class="font-bold text-slate-800">개최 월:</span>
+                            <span class="px-2 py-0.5 bg-blue-600 text-white rounded font-bold">전체 월</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">1월</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">2월</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">3월</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">4월</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">5월</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">6월</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">7월</span>
+                            <span class="ml-auto font-bold text-slate-800">상태:</span>
+                            <span class="px-2 py-0.5 bg-slate-900 text-white rounded">전체</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">진행중</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">예정</span>
+                            <span class="px-2 py-0.5 bg-slate-200 rounded">종료</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-emerald-700 mt-3 bg-emerald-100/60 p-2 rounded">
+                        🎯 <strong>기능 설명:</strong> 텍스트 통합 검색, 정렬 옵션, 4가지 표현 방식(카드/목록/달력/지도) 선택 및 월별·진행상태별 정밀 조회가 가능합니다.
+                    </p>
+                </div>
+
+                <!-- Section 4: Content Cards List -->
+                <div class="relative border-2 border-dashed border-amber-400 bg-amber-50/40 rounded-xl p-4 transition-all hover:bg-amber-50">
+                    <div class="absolute -top-3 left-4 px-2 py-0.5 bg-amber-600 text-white text-xs font-bold rounded">
+                        영역 4: 축제 데이터 결과 카드 뷰
+                    </div>
+                    <div class="pt-2">
+                        <div class="text-xs text-slate-500 mb-3">총 <strong class="text-blue-600">40</strong>개의 축제가 검색되었습니다.</div>
+                        <div class="grid sm:grid-cols-3 gap-4">
+                            <!-- Card Sample 1 -->
+                            <div class="bg-white rounded-xl border overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <div class="h-28 bg-slate-300 relative flex items-center justify-center text-slate-500 font-bold">
+                                    <span>축제 대표 이미지</span>
+                                    <span class="absolute top-2 left-2 px-2 py-0.5 bg-blue-600 text-white text-[10px] rounded font-semibold">개최 예정</span>
+                                    <span class="absolute top-2 left-16 px-2 py-0.5 bg-slate-800 text-white text-[10px] rounded font-semibold">금정구</span>
+                                    <span class="absolute top-2 right-2 w-6 h-6 bg-white/80 rounded-full flex items-center justify-center text-xs"><i class="fa-regular fa-bookmark"></i></span>
+                                </div>
+                                <div class="p-3">
+                                    <div class="font-bold text-sm text-slate-800">금정산성 축제</div>
+                                    <div class="text-xs text-slate-500 mt-1"><i class="fa-regular fa-calendar"></i> 2026.10.12 - 10.14</div>
+                                </div>
+                            </div>
+                            <!-- Card Sample 2 -->
+                            <div class="bg-white rounded-xl border overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <div class="h-28 bg-slate-300 relative flex items-center justify-center text-slate-500 font-bold">
+                                    <span>축제 대표 이미지</span>
+                                    <span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-600 text-white text-[10px] rounded font-semibold">종료</span>
+                                    <span class="absolute top-2 left-12 px-2 py-0.5 bg-slate-800 text-white text-[10px] rounded font-semibold">수영구</span>
+                                    <span class="absolute top-2 right-2 w-6 h-6 bg-white/80 rounded-full flex items-center justify-center text-xs"><i class="fa-regular fa-bookmark"></i></span>
+                                </div>
+                                <div class="p-3">
+                                    <div class="font-bold text-sm text-slate-800">광안리 M 드론라이트쇼</div>
+                                    <div class="text-xs text-slate-500 mt-1"><i class="fa-regular fa-calendar"></i> 상시 개최 (토요일)</div>
+                                </div>
+                            </div>
+                            <!-- Card Sample 3 -->
+                            <div class="bg-white rounded-xl border overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <div class="h-28 bg-slate-300 relative flex items-center justify-center text-slate-500 font-bold">
+                                    <span>축제 대표 이미지</span>
+                                    <span class="absolute top-2 left-2 px-2 py-0.5 bg-slate-600 text-white text-[10px] rounded font-semibold">종료</span>
+                                    <span class="absolute top-2 left-12 px-2 py-0.5 bg-slate-800 text-white text-[10px] rounded font-semibold">영도구</span>
+                                    <span class="absolute top-2 right-2 w-6 h-6 bg-white/80 rounded-full flex items-center justify-center text-xs"><i class="fa-regular fa-bookmark"></i></span>
+                                </div>
+                                <div class="p-3">
+                                    <div class="font-bold text-sm text-slate-800">태종대 수국축제</div>
+                                    <div class="text-xs text-slate-500 mt-1"><i class="fa-regular fa-calendar"></i> 2026.06.24 - 07.02</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-amber-700 mt-3 bg-amber-100/60 p-2 rounded">
+                        🎯 <strong>기능 설명:</strong> 검색 필터 조건에 부합하는 축제를 그리드 카드로 시각화합니다. 상태 배지, 구·군 표시, 북마크 토글 기능이 포함되어 한눈에 개요를 파악할 수 있습니다.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Architecture / Data Flow -->
+    <section id="tech" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-600 font-bold text-sm uppercase tracking-wider">System Architecture</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">공공데이터 연동 & 데이터 처리 흐름</h2>
+                <p class="text-slate-600 mt-3 text-base">
+                    공공데이터 포털 Open API로부터 수집된 축제 데이터의 가공 과정입니다.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6 relative">
+                <!-- Step 1 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center relative">
+                    <div class="w-10 h-10 mx-auto bg-blue-600 text-white font-bold rounded-full flex items-center justify-center text-sm mb-4">1</div>
+                    <h4 class="font-bold text-slate-900 mb-1">공공 API 동기화</h4>
+                    <p class="text-xs text-slate-600">공공데이터 포털 (data.go.kr) 부산 축제 API 실시간 호출</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center relative">
+                    <div class="w-10 h-10 mx-auto bg-blue-600 text-white font-bold rounded-full flex items-center justify-center text-sm mb-4">2</div>
+                    <h4 class="font-bold text-slate-900 mb-1">지역/날짜 파싱</h4>
+                    <p class="text-xs text-slate-600">16개 구·군 카테고리화 및 개최 일정 기준 상태(예정/진행/종료) 자동 계산</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center relative">
+                    <div class="w-10 h-10 mx-auto bg-blue-600 text-white font-bold rounded-full flex items-center justify-center text-sm mb-4">3</div>
+                    <h4 class="font-bold text-slate-900 mb-1">클라이언트 인메모리 필터ing</h4>
+                    <p class="text-xs text-slate-600">다중 조건 검색(키워드+구군+월별+진행상태) 즉시 반응 처리</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center relative">
+                    <div class="w-10 h-10 mx-auto bg-blue-600 text-white font-bold rounded-full flex items-center justify-center text-sm mb-4">4</div>
+                    <h4 class="font-bold text-slate-900 mb-1">반응형 4-View 렌더링</h4>
+                    <p class="text-xs text-slate-600">카드, 목록, 달력, 지도 UI 뷰 포맷으로 실시간 렌더링</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience & Value Proposition -->
+    <section class="py-16 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700">
+                    <div class="text-3xl text-blue-400 mb-3"><i class="fa-solid fa-person-walking-luggage"></i></div>
+                    <h3 class="text-lg font-bold mb-2">부산 관광객</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        여행 일정과 방문 지역에 맞춰 개최 중이거나 개최 예정인 축제를 쉽게 탐색하고 이동 동선을 계획할 수 있습니다.
+                    </p>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700">
+                    <div class="text-3xl text-cyan-400 mb-3"><i class="fa-solid fa-house-user"></i></div>
+                    <h3 class="text-lg font-bold mb-2">부산 시민</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        내 동네(구·군)의 이번 주말 문화 행사나 지역 축제 소식을 쉽고 빠르게 확인하고 즐길 수 있습니다.
+                    </p>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700">
+                    <div class="text-3xl text-emerald-400 mb-3"><i class="fa-solid fa-chart-pie"></i></div>
+                    <h3 class="text-lg font-bold mb-2">행정 & 마케터</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        부산 내 16개 구·군별 축제 데이터 분포 현황을 시각적으로 파악하고 통합 정보 관리 효율을 증대시킵니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+            <div class="flex items-center justify-center gap-2 text-white font-bold text-sm">
+                <i class="fa-solid fa-compass text-blue-500"></i> 부산 축제 가이드 (Busan Festivals Platform)
+            </div>
+            <p class="text-slate-500">
+                본 웹페이지는 공공데이터 포털 API 연동 기반 '부산 축제 가이드' 시스템의 화면 구조 및 핵심 기능을 설명하기 위해 제작된 문서입니다.
+            </p>
+            <p class="text-slate-600">© 2026 Busan Festival Guide. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        function updateThemeUI(isDark) {
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            if (isDark) {
+                if (icon) icon.className = 'fa-solid fa-sun text-amber-400';
+                if (text) text.innerText = '라이트 모드';
+            } else {
+                if (icon) icon.className = 'fa-solid fa-moon text-slate-300';
+                if (text) text.innerText = '다크 모드';
+            }
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeUI(isDark);
+        }
+
+        // Apply theme on page load based on user setting or OS preference
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+            
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            updateThemeUI(isDark);
+        })();
+    </script>
+
+</body>
+</html>
