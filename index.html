@@ -440,12 +440,12 @@
 
             <!-- Card 7: 공공데이터 앱 -->
             <div class="glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group card-item"
-                data-category="app" onclick="openModal(7)">
+                data-category="app" onclick="window.location.href='./festival01/index.html'">
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <span
                             class="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-database"></i>
+                            <i class="fa-solid fa-champagne-glasses"></i>
                         </span>
                         <span
                             class="text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-700/40">주제
@@ -453,16 +453,16 @@
                     </div>
                     <h3
                         class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                        공공데이터 앱</h3>
+                        부산 축제 검색 앱</h3>
                     <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed">
-                        공공 대기질 API 데이터를 연결하여 동네 미세먼지 측정값과 안전 쉼터 위치를 실시간 조회하는 모바일 앱.
+                        부산 문화관광 공공데이터 API를 연동하여 부산 각 구·군별 축제 일정, 위치, 행사 상세 정보를 실시간으로 조회하고 검색하는 웹 Service.
                     </p>
                 </div>
                 <div>
                     <div
                         class="pt-3 border-t border-slate-200 dark:border-slate-700/50 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                         <span class="text-teal-600 dark:text-teal-400 font-medium flex items-center gap-1"><i
-                                class="fa-solid fa-cloud"></i> API 데이터 연동</span>
+                                class="fa-solid fa-arrow-up-right-from-square"></i> 웹사이트 바로가기</span>
                         <i
                             class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-slate-400 dark:text-slate-500"></i>
                     </div>
@@ -1035,40 +1035,48 @@
             },
             7: {
                 tag: "주제 07 • 공공데이터 활용",
-                title: "우리동네 미세먼지 & 안전 쉼터 실시간 안내 앱",
-                icon: '<i class="fa-solid fa-database"></i>',
+                title: "부산 지역 축제 & 문화 행사 실시간 검색 앱",
+                icon: '<i class="fa-solid fa-champagne-glasses"></i>',
                 color: 'teal',
                 content: `
                     <div class="space-y-4">
-                        <p class="text-sm text-slate-600 dark:text-slate-300">
-                            공공데이터 포털 OpenAPI를 활용하여 현재 위치의 미세먼지(PM10, PM2.5) 수치와 가까운 무더위/미세먼지 쉼터를 검색하는 앱입니다.
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            부산광역시 문화관광 공공데이터 포털의 OpenAPI를 활용하여, 부산 지역에서 개최되는 다양한 축제와 문화 행사를 실시간으로 검색하고 안내하는 플랫폼입니다.
                         </p>
 
                         <!-- Mock Data Lookup Table -->
                         <div class="bg-slate-900 dark:bg-slate-950 text-white rounded-xl border border-slate-800 overflow-hidden text-xs">
                             <div class="p-3 bg-slate-800 dark:bg-slate-900 font-bold text-teal-400 flex justify-between items-center border-b border-slate-700 dark:border-slate-800">
-                                <span><i class="fa-solid fa-location-dot"></i> 부산 연제구 연산동 측정소</span>
-                                <span class="text-[10px] bg-teal-900/50 text-teal-300 px-2 py-0.5 rounded border border-teal-700">API 연동 정상</span>
+                                <span><i class="fa-solid fa-calendar-check"></i> 부산 축제 공공데이터 API 연동 목록</span>
+                                <span class="text-[10px] bg-teal-900/50 text-teal-300 px-2 py-0.5 rounded border border-teal-700">OpenAPI 정상 수신</span>
                             </div>
                             <div class="p-4 space-y-3">
                                 <div class="flex justify-between items-center border-b border-slate-800/60 pb-2">
-                                    <span class="text-slate-400">미세먼지 (PM-10)</span>
-                                    <span class="text-emerald-400 font-bold">28 µg/m³ (좋음)</span>
+                                    <span class="text-slate-300 font-medium">부산 불꽃축제</span>
+                                    <span class="text-teal-300">수영구 광안리 해수욕장 (11월)</span>
                                 </div>
                                 <div class="flex justify-between items-center border-b border-slate-800/60 pb-2">
-                                    <span class="text-slate-400">초미세먼지 (PM-2.5)</span>
-                                    <span class="text-amber-400 font-bold">18 µg/m³ (보통)</span>
+                                    <span class="text-slate-300 font-medium">부산국제영화제 (BIFF)</span>
+                                    <span class="text-teal-300">해운대구 영화의전당 (10월)</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-slate-800/60 pb-2">
+                                    <span class="text-slate-300 font-medium">광안리 어방축제</span>
+                                    <span class="text-teal-300">수영구 광안리 일원 (5월)</span>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <span class="text-slate-400">가장 가까운 무더위 쉼터</span>
-                                    <span class="text-slate-200">연산3동 주민센터 (220m)</span>
+                                    <span class="text-slate-300 font-medium">영도다리축제</span>
+                                    <span class="text-teal-300">영도구 아미르공원 (10월)</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="p-3 bg-slate-100 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-400 space-y-1">
-                            <span class="text-teal-700 dark:text-teal-300 font-bold block">기술 구현 포인트</span>
-                            <p>JavaScript Fetch API를 통한 JSON 데이터 파싱 및 위치 기반 거리가중치 알고리즘 적용.</p>
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-400 space-y-1.5">
+                            <span class="text-teal-700 dark:text-teal-300 font-bold block">주요 개발 및 기술 구현 포인트</span>
+                            <ul class="list-disc list-inside space-y-1 text-slate-600 dark:text-slate-300">
+                                <li><strong>OpenAPI 연동:</strong> 공공데이터 포털 JSON 데이터 실시간 Fetch 파싱</li>
+                                <li><strong>조건별 필터링:</strong> 월별, 구·군 지역별, 행사 카테고리별 맞춤 검색 기능</li>
+                                <li><strong>위치 기반 안내:</strong> 지도 API를 연동한 축제장 위치 시각화 및 길안내 서비스</li>
+                            </ul>
                         </div>
                     </div>
                 `
