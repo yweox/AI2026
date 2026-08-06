@@ -471,7 +471,7 @@
 
             <!-- Card 8: 최종 성찰 내용 -->
             <div class="glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group card-item"
-                data-category="app" onclick="openModal(8)">
+                data-category="app" onclick="window.location.href='./final/index.html'">
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <span
@@ -493,7 +493,7 @@
                     <div
                         class="pt-3 border-t border-slate-200 dark:border-slate-700/50 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                         <span class="text-cyan-600 dark:text-cyan-400 font-medium flex items-center gap-1"><i
-                                class="fa-solid fa-feather"></i> 종합 성장일지</span>
+                                class="fa-solid fa-arrow-up-right-from-square"></i> 웹사이트 바로가기</span>
                         <i
                             class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-slate-400 dark:text-slate-500"></i>
                     </div>
@@ -1032,97 +1032,6 @@
                         </div>
                     </div>
                 `
-            },
-            8: {
-                tag: "주제 08 • 최종 종합 성찰",
-                title: "인공지능일반 수강 후 나에게 일어난 변화와 성찰",
-                icon: '<i class="fa-solid fa-award"></i>',
-                color: 'cyan',
-                content: `
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-3 p-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700">
-                            <div class="w-12 h-12 rounded-lg bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 p-0.5 flex-shrink-0 overflow-hidden">
-                                <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="100" cy="100" r="95" fill="#f1f5f9"/>
-                                    <path d="M 35 200 C 35 155, 60 135, 100 135 C 140 135, 165 155, 165 200 Z" fill="#2b384e"/>
-                                    <path d="M 72 135 L 100 180 L 128 135 Z" fill="#f8fafc"/>
-                                    <path d="M 82 135 L 100 165 L 118 135 Z" fill="#e2e8f0"/>
-                                    <polygon points="95,135 105,135 107,165 100,172 93,165" fill="#3b82f6"/>
-                                    <path d="M 68 62 C 68 112, 132 112, 132 62 C 132 40, 68 40, 68 62 Z" fill="#fed7aa"/>
-                                    <circle cx="67" cy="72" r="7" fill="#fed7aa"/>
-                                    <circle cx="133" cy="72" r="7" fill="#fed7aa"/>
-                                    <path d="M 64 62 C 60 38, 80 22, 100 22 C 120 22, 140 38, 136 62 C 130 48, 122 36, 100 38 C 78 36, 70 48, 64 62 Z" fill="#1e293b"/>
-                                    <circle cx="84" cy="68" r="14" fill="none" stroke="#0f172a" stroke-width="3.5"/>
-                                    <circle cx="116" cy="68" r="14" fill="none" stroke="#0f172a" stroke-width="3.5"/>
-                                    <line x1="98" y1="68" x2="102" y2="68" stroke="#0f172a" stroke-width="3.5"/>
-                                    <circle cx="84" cy="68" r="3.5" fill="#0f172a"/>
-                                    <circle cx="116" cy="68" r="3.5" fill="#0f172a"/>
-                                    <path d="M 91 88 Q 100 96 109 88" fill="none" stroke="#c2410c" stroke-width="2.5" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200 block">정연우 (고등학교 2학년)</span>
-                                <span class="text-[11px] text-slate-500 dark:text-slate-400">컴퓨터공학과 진학 희망 / AI 연구원 지망</span>
-                            </div>
-                        </div>
-
-                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            한 학기 동안 '인공지능일반' 과목을 수강하면서 단순 사용자를 넘어 인공지능의 윤리적 원리와 알고리즘 구조를 체득했습니다. 이는 향후 <strong>컴퓨터공학과</strong>에 진학하여 탄탄한 소프트웨어 기반 위에서 혁신적인 AI 모델을 연구·개발하겠다는 확고한 꿈의 마중물이 되었습니다.
-                        </p>
-                        
-                        <div class="p-4 bg-slate-100 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
-                            <h4 class="text-xs font-bold text-cyan-600 dark:text-cyan-400 mb-2">AI 핵심 역량 자체 평가 (Radar Chart)</h4>
-                            <canvas id="radarChart" class="max-h-60"></canvas>
-                        </div>
-
-                        <div class="p-4 bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/40 rounded-xl text-xs space-y-2">
-                            <h4 class="font-bold text-cyan-900 dark:text-cyan-200">최종 다짐 및 비전</h4>
-                            <p class="text-slate-700 dark:text-slate-300 italic">
-                                "컴퓨터공학 기초부터 차근차근 다져서, AI 기술을 통해 세상의 실제 문제를 지혜롭게 해결하는 책임감 있는 AI 소프트웨어 엔지니어로 성장하겠습니다."
-                            </p>
-                        </div>
-                    </div>
-                `,
-                onRender: () => {
-                    destroyActiveChart();
-                    const canvas = document.getElementById('radarChart');
-                    if (!canvas || typeof Chart === 'undefined') return;
-
-                    const isDark = document.documentElement.classList.contains('dark');
-                    const textColor = isDark ? '#cbd5e1' : '#475569';
-                    const gridColor = isDark ? '#334155' : '#cbd5e1';
-
-                    const ctx = canvas.getContext('2d');
-                    activeChart = new Chart(ctx, {
-                        type: 'radar',
-                        data: {
-                            labels: ['AI 윤리 리터러시', '프롬프트 활용력', '데이터 분석력', '문제 해결력', '웹앱 프로토타이핑'],
-                            datasets: [{
-                                label: '수업 전',
-                                data: [40, 50, 30, 50, 20],
-                                borderColor: '#64748b',
-                                backgroundColor: 'rgba(100, 116, 139, 0.2)'
-                            }, {
-                                label: '수업 후 (현재)',
-                                data: [95, 90, 85, 92, 88],
-                                borderColor: '#06b6d4',
-                                backgroundColor: 'rgba(6, 182, 212, 0.25)'
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: { legend: { labels: { color: textColor } } },
-                            scales: {
-                                r: {
-                                    angleLines: { color: gridColor },
-                                    grid: { color: gridColor },
-                                    pointLabels: { color: textColor, font: { size: 10 } },
-                                    ticks: { display: false, max: 100 }
-                                }
-                            }
-                        }
-                    });
-                }
             }
         };
 
