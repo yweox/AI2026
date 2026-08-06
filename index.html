@@ -409,12 +409,12 @@
 
             <!-- Card 6: 학교 문제 해결 웹앱 -->
             <div class="glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group card-item"
-                data-category="problem" onclick="openModal(6)">
+                data-category="problem" onclick="window.location.href='./mealService/index.html'">
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <span
                             class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg font-bold group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-school"></i>
+                            <i class="fa-solid fa-utensils"></i>
                         </span>
                         <span
                             class="text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/40">주제
@@ -424,14 +424,14 @@
                         class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
                         학교 문제 해결 웹앱</h3>
                     <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed">
-                        급식실 대기시간 혼잡도 및 잔반량을 실시간 예측 안내하는 학교 전용 '스마트 급식 알리미' 프로토타입.
+                        오늘의 급식 메뉴, 영양 정보 및 식재료 알레르기 안내를 실시간으로 편리하게 조회하는 학교 전용 '스마트 급식 정보 알리미' 웹앱.
                     </p>
                 </div>
                 <div>
                     <div
                         class="pt-3 border-t border-slate-200 dark:border-slate-700/50 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                         <span class="text-rose-600 dark:text-rose-400 font-medium flex items-center gap-1"><i
-                                class="fa-solid fa-mobile-screen"></i> 인터렉티브 웹앱</span>
+                                class="fa-solid fa-utensils"></i> 급식 정보 웹앱 바로가기</span>
                         <i
                             class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-slate-400 dark:text-slate-500"></i>
                     </div>
@@ -984,54 +984,6 @@
                         }
                     });
                 }
-            },
-            6: {
-                tag: "주제 06 • 학교 문제 해결 웹앱",
-                title: "스마트 학교 급식 대기시간 & 잔반 예측 웹앱",
-                icon: '<i class="fa-solid fa-school"></i>',
-                color: 'rose',
-                content: `
-                    <div class="space-y-4">
-                        <p class="text-sm text-slate-600 dark:text-slate-300">
-                            점심시간 급식실 혼잡과 잔반 낭비 문제를 해결하기 위해 AI 인원 예측 알고리즘을 적용한 웹앱 시뮬레이터입니다.
-                        </p>
-                        
-                        <!-- Interactive App Simulator Widget -->
-                        <div class="p-5 bg-slate-900 dark:bg-slate-950 text-white rounded-2xl border border-rose-900/50 space-y-4">
-                            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                                <span class="text-xs font-bold text-rose-400 flex items-center gap-2">
-                                    <i class="fa-solid fa-utensils"></i> 미래고 급식실 실시간 상태
-                                </span>
-                                <span class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded-full border border-rose-500/30">Live Simulation</span>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3 text-center">
-                                <div class="p-3 bg-slate-800 dark:bg-slate-900 rounded-xl border border-slate-700 dark:border-slate-800">
-                                    <span class="text-[11px] text-slate-400 block">현재 예측 대기시간</span>
-                                    <span id="queue-time" class="text-2xl font-black text-rose-400">12분</span>
-                                </div>
-                                <div class="p-3 bg-slate-800 dark:bg-slate-900 rounded-xl border border-slate-700 dark:border-slate-800">
-                                    <span class="text-[11px] text-slate-400 block">오늘 예상 잔반 지수</span>
-                                    <span id="waste-index" class="text-2xl font-black text-emerald-400">보통 (적정)</span>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label class="text-xs text-slate-300 block">시간대별 예상 혼잡도 테스트:</label>
-                                <input type="range" min="1" max="3" value="2" class="w-full accent-rose-500 cursor-pointer" oninput="updateMealApp(this.value)">
-                                <div class="flex justify-between text-[10px] text-slate-400">
-                                    <span>12:10 (1학년)</span>
-                                    <span>12:30 (2학년 피크)</span>
-                                    <span>12:50 (3학년)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p class="text-xs text-slate-500 dark:text-slate-400">
-                            * 기상 데이터 및 메뉴 선호도 설문 데이터 기반 알고리즘 적용
-                        </p>
-                    </div>
-                `
             },
             7: {
                 tag: "주제 07 • 공공데이터 활용",
